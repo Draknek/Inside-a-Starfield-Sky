@@ -32,7 +32,7 @@ package
 		
 		public override function render ():void
 		{
-			Draw.linePlus(x1, y1, x2, y2, Main.color(player), 1, isStarter ? 2 : 1);
+			Draw.linePlus(x1, y1, x2, y2, Main.color(player), 1, isStarter ? 3 : 2);
 		}
 		
 		public function updatePosition():void

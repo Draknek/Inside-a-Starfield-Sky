@@ -11,17 +11,12 @@ package
 		
 		public var activePlayer:int = 0;
 		
-		public var nearStar:Entity;
 		public var activeLine:Line;
 		
-		//var StarGrid:Array;
+		public var drawing:Boolean = false;
 		
 		public function Level ()
 		{
-			nearStar = new Entity(320, 240);
-			
-			//StarGrid = new Array();
-			
 			for (var starsx:int = 0; starsx < 10; starsx++)
 			{
 				for (var starsy:int = 0; starsy < 10; starsy++)
@@ -36,12 +31,19 @@ package
 		
 		public override function update (): void
 		{
+			var nearStar:Star = nearestToPoint("star", mouseX, mouseY) as Star;
+			
 			if (Input.mousePressed) {
 				activeLine = new Line(activePlayer, nearStar, null);
-			} else if (Input.mouseDown) {
-			
-			} else if (Input.mouseReleased) {
-				activeLine = null
+			} else if (activeLine && Input.mouseReleased) {
+				if (activeLine.star1 != nearStar) {
+					activeLine.star2 = nearStar;
+					add(activeLine);
+					
+					activePlayer = int(!activePlayer);
+				}
+				
+				activeLine = null;
 			}
 			
 			if (activeLine) {
@@ -54,6 +56,10 @@ package
 		public override function render (): void
 		{
 			super.render();
+			
+			var nearStar:Star = nearestToPoint("star", mouseX, mouseY) as Star;
+			
+			Draw.circlePlus(nearStar.x, nearStar.y, 7, 0x00FF00, 0.75, false);
 			
 			if (activeLine) {
 				activeLine.render();
