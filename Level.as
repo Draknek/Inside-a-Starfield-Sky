@@ -36,8 +36,10 @@ package
 			if (Input.mousePressed) {
 				activeLine = new Line(activePlayer, nearStar, null);
 			} else if (activeLine && Input.mouseReleased) {
-				if (activeLine.star1 != nearStar) {
-					activeLine.star2 = nearStar;
+				activeLine.star2 = nearStar;
+				activeLine.update();
+				
+				if (validLine()) {
 					add(activeLine);
 					
 					activePlayer = int(!activePlayer);
@@ -51,6 +53,28 @@ package
 			}
 			
 			super.update();
+		}
+		
+		private function validLine ():Boolean
+		{
+			if (activeLine.star1 == activeLine.star2) {
+				return false;
+			}
+			
+			var lines:Array = [];
+			
+			getType("line", lines);
+			
+			for each (var l:Line in lines) {
+				if (l.star1 == activeLine.star1 && l.star2 == activeLine.star2) return false;
+				if (l.star1 == activeLine.star2 && l.star2 == activeLine.star1) return false;
+				
+				if (l.intersects(activeLine)) {
+					return false;
+				}
+			}
+			
+			return true;
 		}
 		
 		public override function render (): void

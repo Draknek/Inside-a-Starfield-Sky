@@ -23,6 +23,8 @@ package
 			star1 = _star1;
 			star2 = _star2;
 			updatePosition();
+			
+			type = "line";
 		}
 		
 		public override function update ():void
