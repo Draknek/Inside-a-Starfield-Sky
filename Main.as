@@ -22,7 +22,7 @@ package
 		public static function color (id:int):uint
 		{
 			if (id) {
-				return 0xFF00FF00;
+				return 0xFF0000FF;
 			} else {
 				return 0xFFFF0000;
 			}

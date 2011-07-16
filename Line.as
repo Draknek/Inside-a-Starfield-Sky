@@ -13,7 +13,8 @@ package
 		public var player:int;
 		
 		public var isStarter:Boolean = false;
-		
+		public var valid:Boolean = true;
+				
 		public var star1:Star;
 		public var star2:Star;
 		
@@ -25,6 +26,8 @@ package
 			star1.lines.push(this);
 			star2.lines.push(this);
 			updatePosition();
+			
+			type = "line";
 		}
 		
 		public override function update ():void
@@ -34,7 +37,13 @@ package
 		
 		public override function render ():void
 		{
-			Draw.linePlus(x1, y1, x2, y2, Main.color(player), 1, isStarter ? 2 : 1);
+			var color:uint = Main.color(player);
+			
+			if (! valid) {
+				color = 0xAAAAAA;
+			}
+			
+			Draw.linePlus(x1, y1, x2, y2, color, 1, isStarter ? 3 : 2);
 		}
 		
 		public function updatePosition():void

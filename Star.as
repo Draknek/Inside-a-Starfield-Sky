@@ -14,12 +14,18 @@ package
 		
 		public var lines:Array = [];
 		
+		public var image:Image;
+		
 		public function Star(xPosition:int, yPosition:int) 
 		{
 			x = xPosition;
 			y = yPosition;
 			
-			graphic = new Image(StarImage);
+			graphic = image = new Image(StarImage);
+			
+			type = "star";
+			
+			image.centerOO();
 		}
 		
 		override public function update():void
