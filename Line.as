@@ -23,6 +23,8 @@ package
 			player = p;
 			star1 = _star1;
 			star2 = _star2;
+			star1.lines.push(this);
+			star2.lines.push(this);
 			updatePosition();
 			
 			type = "line";

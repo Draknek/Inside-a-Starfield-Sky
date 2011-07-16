@@ -41,6 +41,92 @@ package
 		{
 			
 		}
+		
+		public function IsConnectedTo(player:int, destination:Star):Boolean
+		{
+			if (destination == this) {
+				return true;
+			}
+			
+			var CheckedStars:Array = [];
+			
+			CheckedStars.push(this);
+			
+			if (CheckStarConnections(player, this, destination)) {
+				return true;
+			}
+			
+			/*for (var l:int; l < lines.length; l++) {
+				if (lines[l].star1 == this) {
+					if (CheckedStars.indexOf(lines[l].star2) == -1)
+					{
+						if (lines[l].star2.NestedIsConnectedTo(CheckedStars, player, destination))
+						{
+							return true;
+						}
+						CheckedStars.push(lines[l].star2);
+					}
+				}
+				else
+				{
+					if (CheckedStars.indexOf(lines[l].star1) == -1)
+					{
+						if (lines[l].star1.NestedIsConnectedTo(CheckedStars, player, destination))
+						{
+							return true;
+						}
+						CheckedStars.push(lines[l].star1);
+					}
+				}
+			} */
+			
+			return NestedIsConnectedTo(CheckedStars, player, destination);
+		}
+		
+		public function NestedIsConnectedTo(checkedstars:Array, player:int, destination:Star):Boolean
+		{
+			if (CheckStarConnections(player, this, destination)) {
+				return true;
+			}
+			
+			for (var l:int; l < lines.length; l++) {
+				if (lines[l].star1 == this) {
+					if (checkedstars.indexOf(lines[l].star2) == -1)
+					{
+						checkedstars.push(lines[l].star2);
+						if (lines[l].star2.NestedIsConnectedTo(checkedstars, player, destination))
+						{
+							return true;
+						}
+					}
+				}
+				else
+				{
+					if (checkedstars.indexOf(lines[l].star1) == -1)
+					{
+						checkedstars.push(lines[l].star1);
+						if (lines[l].star1.NestedIsConnectedTo(checkedstars, player, destination))
+						{
+							return true;
+						}
+					}
+				}
+			}
+			
+			return false;
+		}
+		
+		private function CheckStarConnections(player:int, source:Star, destination:Star):Boolean
+		{
+			for (var l:int; l < lines.length; l++) {
+				if ((source.lines[l].star1 == destination || source.lines[l].star2 == destination) && source.lines[l].player == player)
+				{
+					return true;
+				}
+			}
+			
+			return false;
+		}
 	}
 
 }

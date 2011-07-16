@@ -18,16 +18,72 @@ package
 		public function Level ()
 		{
 			var spacing:Number = 40;
+			var LeftStars:Array = [];
+			var RightStars:Array = [];
+			var TopStars:Array = [];
+			var BottomStars:Array = [];
 			
-			for (var starsx:int = 0; starsx < 10; starsx++)
+			for (var starsx:int = 0; starsx < 9; starsx++)
 			{
-				for (var starsy:int = 0; starsy < 10; starsy++)
+				for (var starsy:int = 0; starsy < 9; starsy++)
 				{
-					if (FP.rand(5) < 4)
-					{
-						add(new Star(20 + (FP.rand(16) - 8) + (starsx * spacing), 20 + (FP.rand(16) - 8) + (starsy * spacing)));
+					var newstar:Star = new Star(50 + (FP.rand(30) - 15) + (starsx * 65), 50 + (FP.rand(30) - 15) + (starsy * 45));
+					
+					if (FP.rand(5) < 4) {
+						if (starsx == 0) {
+							LeftStars.push(newstar);
+						}
+						else if (starsx == 8) {
+							RightStars.push(newstar);
+						}
+						
+						if (starsy == 0) {
+							TopStars.push(newstar);
+						}
+						else if (starsy == 8) {
+							BottomStars.push(newstar);
+						}
+						
+						add(newstar);
 					}
 				}
+			}
+			
+			
+			
+			var stars:int;
+			
+			trace("Building LeftStar lines...");
+			
+			for (stars = 0; stars < LeftStars.length - 1; stars++) {
+				add(new Line(0, LeftStars[stars], LeftStars[stars + 1]));
+			}
+			
+			trace("Building RightStar lines...");
+			
+			for (stars = 0; stars < RightStars.length - 1; stars++) {
+				add(new Line(0, RightStars[stars], RightStars[stars + 1]));
+			}
+			
+			trace("Building TopStar lines...");
+			
+			for (stars = 0; stars < TopStars.length - 1; stars++) {
+				add(new Line(1, TopStars[stars], TopStars[stars + 1]));
+			}
+			
+			trace("Building BottomStar lines...");
+			
+			for (stars = 0; stars < BottomStars.length - 1; stars++) {
+				add(new Line(1, BottomStars[stars], BottomStars[stars + 1]));
+			}
+			
+			trace("Connection check...");
+			
+			if (LeftStars[0].IsConnectedTo(0, LeftStars[2])) {
+				trace("Is Connected!");
+			}
+			else {
+				trace("Isn't connected.");
 			}
 		}
 		
