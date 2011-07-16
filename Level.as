@@ -17,13 +17,15 @@ package
 		
 		public function Level ()
 		{
+			var spacing:Number = 40;
+			
 			for (var starsx:int = 0; starsx < 10; starsx++)
 			{
 				for (var starsy:int = 0; starsy < 10; starsy++)
 				{
 					if (FP.rand(5) < 4)
 					{
-						add(new Star(20 + (FP.rand(16) - 8) + (starsx * 60), 20 + (FP.rand(16) - 8) + (starsy * 40)));
+						add(new Star(20 + (FP.rand(16) - 8) + (starsx * spacing), 20 + (FP.rand(16) - 8) + (starsy * spacing)));
 					}
 				}
 			}
@@ -37,7 +39,6 @@ package
 				activeLine = new Line(activePlayer, nearStar, null);
 			} else if (activeLine && Input.mouseReleased) {
 				activeLine.star2 = nearStar;
-				activeLine.update();
 				
 				if (validLine()) {
 					add(activeLine);
@@ -57,6 +58,8 @@ package
 		
 		private function validLine ():Boolean
 		{
+			activeLine.update();
+			
 			if (activeLine.star1 == activeLine.star2) {
 				return false;
 			}
@@ -86,6 +89,11 @@ package
 			Draw.circlePlus(nearStar.x, nearStar.y, 7, 0x00FF00, 0.75, false);
 			
 			if (activeLine) {
+				activeLine.star2 = nearStar;
+				activeLine.valid = validLine();
+				activeLine.star2 = null;
+				
+				activeLine.updatePosition();
 				activeLine.render();
 			}
 		}
