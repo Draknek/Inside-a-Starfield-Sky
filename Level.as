@@ -27,7 +27,10 @@ package
 			{
 				for (var starsy:int = 0; starsy < 9; starsy++)
 				{
-					var newstar:Star = new Star(50 + (FP.rand(30) - 15) + (starsx * 65), 50 + (FP.rand(30) - 15) + (starsy * 45));
+					
+					if ((starsx == 0 || starsx == 8) && (starsy == 0 || starsy == 8)) continue;
+					
+					var newstar:Star = new Star(50 + (FP.rand(30) - 15) + (starsx * 45), 50 + (FP.rand(30) - 15) + (starsy * 45));
 					
 					if (FP.rand(5) < 4) {
 						if (starsx == 0) {
@@ -56,25 +59,25 @@ package
 			trace("Building LeftStar lines...");
 			
 			for (stars = 0; stars < LeftStars.length - 1; stars++) {
-				add(new Line(0, LeftStars[stars], LeftStars[stars + 1]));
+				connectStarter(LeftStars[stars], LeftStars[stars + 1], 0);
 			}
 			
 			trace("Building RightStar lines...");
 			
 			for (stars = 0; stars < RightStars.length - 1; stars++) {
-				add(new Line(0, RightStars[stars], RightStars[stars + 1]));
+				connectStarter(RightStars[stars], RightStars[stars + 1], 0);
 			}
 			
 			trace("Building TopStar lines...");
 			
 			for (stars = 0; stars < TopStars.length - 1; stars++) {
-				add(new Line(1, TopStars[stars], TopStars[stars + 1]));
+				connectStarter(TopStars[stars], TopStars[stars + 1], 1);
 			}
 			
 			trace("Building BottomStar lines...");
 			
 			for (stars = 0; stars < BottomStars.length - 1; stars++) {
-				add(new Line(1, BottomStars[stars], BottomStars[stars + 1]));
+				connectStarter(BottomStars[stars], BottomStars[stars + 1], 1);
 			}
 			
 			trace("Connection check...");
@@ -85,6 +88,15 @@ package
 			else {
 				trace("Isn't connected.");
 			}
+		}
+		
+		public function connectStarter (a:Star, b:Star, player:int):void
+		{
+			var l:Line = new Line(player, a, b);
+			
+			add(l);
+			a.lines.push(l);
+			b.lines.push(l);
 		}
 		
 		public override function update (): void
