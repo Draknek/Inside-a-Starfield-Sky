@@ -44,6 +44,10 @@ package
 				activeLine = null
 			}
 			
+			if (activeLine) {
+				activeLine.update();
+			}
+			
 			super.update();
 		}
 		
