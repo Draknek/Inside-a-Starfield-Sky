@@ -11,12 +11,12 @@ package
 		
 		public var activePlayer:int = 0;
 		
-		public var nearStar:Entity;
+		public var nearStar:Star;
 		public var activeLine:Line;
 		
 		public function Level ()
 		{
-			nearStar = new Entity(320, 240);
+			nearStar = new Star(320, 240);
 			var LeftStars:Array = [];
 			var TopStars:Array = [];
 			var BottomStars:Array = [];
@@ -62,6 +62,13 @@ package
 			
 			for (stars = 0; stars < BottomStars.length - 1; stars++) {
 				add(new Line(1, BottomStars[stars], BottomStars[stars + 1]));
+			}
+			
+			if (LeftStars[0].IsConnectedTo(0, LeftStars[4])) {
+				trace("Is Connected!");
+			}
+			else {
+				trace("Isn't connected.");
 			}
 		}
 		

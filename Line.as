@@ -14,14 +14,16 @@ package
 		
 		public var isStarter:Boolean = false;
 		
-		public var star1:Entity;
-		public var star2:Entity;
+		public var star1:Star;
+		public var star2:Star;
 		
-		public function Line (p:int, _star1:Entity, _star2:Entity)
+		public function Line (p:int, _star1:Star, _star2:Star)
 		{
 			player = p;
 			star1 = _star1;
 			star2 = _star2;
+			star1.lines.push(this);
+			star2.lines.push(this);
 			updatePosition();
 		}
 		
