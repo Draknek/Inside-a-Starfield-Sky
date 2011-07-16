@@ -15,10 +15,10 @@ package
 		public var isStarter:Boolean = false;
 		public var valid:Boolean = true;
 				
-		public var star1:Entity;
-		public var star2:Entity;
+		public var star1:Star;
+		public var star2:Star;
 		
-		public function Line (p:int, _star1:Entity, _star2:Entity)
+		public function Line (p:int, _star1:Star, _star2:Star)
 		{
 			player = p;
 			star1 = _star1;

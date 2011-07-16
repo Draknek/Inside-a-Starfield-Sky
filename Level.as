@@ -33,17 +33,22 @@ package
 		
 		public override function update (): void
 		{
-			var nearStar:Star = nearestToPoint("star", mouseX, mouseY) as Star;
+			var nearStar:Star = getNearStar();
 			
-			if (Input.mousePressed) {
+			if (nearStar && Input.mousePressed) {
 				activeLine = new Line(activePlayer, nearStar, null);
 			} else if (activeLine && Input.mouseReleased) {
-				activeLine.star2 = nearStar;
+				if (nearStar) {
+					activeLine.star2 = nearStar;
 				
-				if (validLine()) {
-					add(activeLine);
+					if (validLine()) {
+						activeLine.star1.lines.push(activeLine);
+						activeLine.star2.lines.push(activeLine);
+						
+						add(activeLine);
 					
-					activePlayer = int(!activePlayer);
+						activePlayer = int(!activePlayer);
+					}
 				}
 				
 				activeLine = null;
@@ -54,6 +59,17 @@ package
 			}
 			
 			super.update();
+		}
+		
+		private function getNearStar (): Star
+		{
+			var nearStar:Star = nearestToPoint("star", mouseX, mouseY) as Star;
+			
+			var dist:Number = FP.distance(nearStar.x, nearStar.y, mouseX, mouseY);
+			
+			if (dist > 12) return null;
+			
+			return nearStar;
 		}
 		
 		private function validLine ():Boolean
@@ -84,15 +100,19 @@ package
 		{
 			super.render();
 			
-			var nearStar:Star = nearestToPoint("star", mouseX, mouseY) as Star;
+			var nearStar:Star = getNearStar();
 			
-			Draw.circlePlus(nearStar.x, nearStar.y, 7, 0x00FF00, 0.75, false);
+			if (nearStar) Draw.circlePlus(nearStar.x, nearStar.y, 7, 0x00FF00, 0.75, false);
 			
 			if (activeLine) {
-				activeLine.star2 = nearStar;
-				activeLine.valid = validLine();
-				activeLine.star2 = null;
+				if (nearStar) {
+					activeLine.star2 = nearStar;
+					activeLine.valid = validLine();
+				} else {
+					activeLine.valid = false;
+				}
 				
+				activeLine.star2 = null;
 				activeLine.updatePosition();
 				activeLine.render();
 			}
