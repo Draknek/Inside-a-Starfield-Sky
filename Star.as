@@ -12,6 +12,8 @@ package
 		[Embed(source = 'star.png')]
 		private const StarImage:Class;
 		
+		public var lines:Array = [];
+		
 		public function Star(xPosition:int, yPosition:int) 
 		{
 			x = xPosition;

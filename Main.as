@@ -19,6 +19,15 @@ package
 			super.init();
 		}
 		
+		public static function color (id:int):uint
+		{
+			if (id) {
+				return 0xFF00FF00;
+			} else {
+				return 0xFFFF0000;
+			}
+		}
+		
 		public function sitelock (allowed:*):Boolean
 		{
 			var url:String = FP.stage.loaderInfo.url;
