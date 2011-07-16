@@ -69,7 +69,13 @@ package
 			
 			if (dist > 12) return null;
 			
-			return nearStar;
+			var starPlayer:int = nearStar.getPlayer();
+			
+			if (starPlayer == -1 || starPlayer == activePlayer) {
+				return nearStar;
+			} else {
+				return null;
+			}
 		}
 		
 		private function validLine ():Boolean

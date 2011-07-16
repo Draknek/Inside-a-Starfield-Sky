@@ -28,6 +28,15 @@ package
 			image.centerOO();
 		}
 		
+		public function getPlayer ():int
+		{
+			if (lines.length) {
+				return lines[0].player;
+			} else {
+				return -1;
+			}
+		}
+		
 		override public function update():void
 		{
 			
