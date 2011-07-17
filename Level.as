@@ -203,7 +203,14 @@ package
 			
 			var nearStar:Star = getNearStar();
 			
-			if (nearStar) Draw.circlePlus(nearStar.x, nearStar.y, 7, 0x00FF00, 0.75, false);
+			if (nearStar) {
+				Draw.circlePlus(nearStar.x, nearStar.y, 7, 0x00FF00, 0.75, false);
+			}
+			
+			if (activeLine || nearStar) {
+				var center:Entity = activeLine ? activeLine.star1 : nearStar;
+				Draw.circlePlus(center.x, center.y, Line.MAX_LENGTH, 0xFFFFFF, 0.25, false);
+			}
 			
 			if (activeLine) {
 				if (nearStar) {
