@@ -33,21 +33,27 @@ package
 					
 					var newstar:Star = new Star(50 + (FP.rand(30) - 15) + (starsx * 45), 50 + (FP.rand(30) - 15) + (starsy * 45));
 					
-					if (FP.rand(5) < 4) {
-						if (starsx == 0) {
-							LeftStars.push(newstar);
-						}
-						else if (starsx == 8) {
-							RightStars.push(newstar);
-						}
-						
-						if (starsy == 0) {
-							TopStars.push(newstar);
-						}
-						else if (starsy == 8) {
-							BottomStars.push(newstar);
-						}
-						
+					var mustUse:Boolean = false;
+				
+					if (starsx == 0) {
+						LeftStars.push(newstar);
+						mustUse = true;
+					}
+					else if (starsx == 8) {
+						RightStars.push(newstar);
+						mustUse = true;
+					}
+					
+					if (starsy == 0) {
+						TopStars.push(newstar);
+						mustUse = true;
+					}
+					else if (starsy == 8) {
+						BottomStars.push(newstar);
+						mustUse = true;
+					}
+					
+					if (mustUse || FP.rand(5) < 4) {
 						add(newstar);
 					}
 				}
