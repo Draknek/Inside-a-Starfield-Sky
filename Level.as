@@ -11,6 +11,7 @@ package
 		
 		public var activePlayer:int = 0;
 		
+		public var lastLine:Line;
 		public var activeLine:Line;
 		
 		public var drawing:Boolean = false;
@@ -121,6 +122,8 @@ package
 						activeLine.star1.lines.push(activeLine);
 						activeLine.star2.lines.push(activeLine);
 						
+						lastLine = activeLine;
+						
 						add(activeLine);
 					
 						activePlayer = int(!activePlayer);
@@ -155,6 +158,8 @@ package
 				if (nearStar.isStarter) return null;
 				
 				if (nearStar.getPower() >= activeLine.star1.getPower()) return null;
+				
+				if (lastLine && (lastLine.star1 == nearStar || lastLine.star2 == nearStar)) return null;
 				
 				return nearStar;
 			} else {

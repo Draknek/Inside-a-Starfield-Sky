@@ -18,7 +18,7 @@ package
 		public var star1:Star;
 		public var star2:Star;
 		
-		public static const MAX_LENGTH:Number = 75;
+		public static const MAX_LENGTH:Number = 100;
 		
 		public function Line (p:int, _star1:Star, _star2:Star)
 		{

@@ -57,7 +57,13 @@ package
 		
 		override public function update():void
 		{
+			image.color = 0xFFFFFF;
 			
+			var checkLine:Line = Level(world).lastLine;
+			
+			if (checkLine && (checkLine.star1 == this || checkLine.star2 == this)) {
+				image.color = 0x808080;
+			}
 		}
 		
 		public function IsConnectedTo(player:int, destination:Star):Boolean
