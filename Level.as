@@ -93,10 +93,14 @@ package
 		public function connectStarter (a:Star, b:Star, player:int):void
 		{
 			var l:Line = new Line(player, a, b);
+			l.isStarter = true;
 			
 			add(l);
 			a.lines.push(l);
 			b.lines.push(l);
+			
+			a.isStarter = true;
+			b.isStarter = true;
 		}
 		
 		public override function update (): void
@@ -110,6 +114,10 @@ package
 					activeLine.star2 = nearStar;
 				
 					if (validLine()) {
+						if (nearStar.getPlayer() != activePlayer) {
+							nearStar.removeAllLines();
+						}
+						
 						activeLine.star1.lines.push(activeLine);
 						activeLine.star2.lines.push(activeLine);
 						
@@ -139,7 +147,15 @@ package
 			
 			var starPlayer:int = nearStar.getPlayer();
 			
+			if (activeLine && FP.distance(nearStar.x, nearStar.y, activeLine.star1.x, activeLine.star1.y) > Line.MAX_LENGTH) return null;
+			
 			if (starPlayer == -1 || starPlayer == activePlayer) {
+				return nearStar;
+			} else if (activeLine) {
+				if (nearStar.isStarter) return null;
+				
+				if (nearStar.getPower() >= activeLine.star1.getPower()) return null;
+				
 				return nearStar;
 			} else {
 				return null;

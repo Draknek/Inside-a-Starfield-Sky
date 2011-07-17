@@ -1,6 +1,6 @@
 package  
 {
-	import net.flashpunk.Entity;
+	import net.flashpunk.*;
 	import net.flashpunk.graphics.Image;
 	
 	/**
@@ -15,6 +15,8 @@ package
 		public var lines:Array = [];
 		
 		public var image:Image;
+		
+		public var isStarter:Boolean = false;
 		
 		public function Star(xPosition:int, yPosition:int) 
 		{
@@ -35,6 +37,22 @@ package
 			} else {
 				return -1;
 			}
+		}
+		
+		public function getPower ():int
+		{
+			return lines.length;
+		}
+		
+		public function removeAllLines ():void
+		{
+			for each (var l:Line in lines) {
+				if (l.star1 == this) FP.remove(l.star2.lines, l);
+				if (l.star2 == this) FP.remove(l.star1.lines, l);
+				l.world.remove(l);
+			}
+			
+			lines.length = 0;
 		}
 		
 		override public function update():void

@@ -18,6 +18,8 @@ package
 		public var star1:Star;
 		public var star2:Star;
 		
+		public static const MAX_LENGTH:Number = 75;
+		
 		public function Line (p:int, _star1:Star, _star2:Star)
 		{
 			player = p;
@@ -41,7 +43,7 @@ package
 				color = 0xAAAAAA;
 			}
 			
-			Draw.linePlus(x1, y1, x2, y2, color, 1, isStarter ? 3 : 2);
+			Draw.linePlus(x1, y1, x2, y2, color, 1, isStarter ? 4 : 2);
 		}
 		
 		public function updatePosition():void

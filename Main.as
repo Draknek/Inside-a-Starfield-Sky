@@ -9,7 +9,7 @@ package
 		{
 			super(640, 480, 60, true);
 			FP.world = new Level();
-			FP.console.enable();
+			//FP.console.enable();
 		}
 		
 		public override function init (): void
