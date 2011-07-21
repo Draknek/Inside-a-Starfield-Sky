@@ -10,11 +10,17 @@ package
 		//[Embed(source="images/bg.png")] public static const BgGfx: Class;
 		
 		public var activePlayer:int = 0;
+		public var winningPlayer:int = -1;
 		
 		public var lastLine:Line;
 		public var activeLine:Line;
 		
 		public var drawing:Boolean = false;
+		
+		public var playerStart:Array = [];
+		public var playerEnd:Array = [];
+		
+		public var info:InfoText;
 		
 		public function Level ()
 		{
@@ -59,42 +65,32 @@ package
 				}
 			}
 			
-			
+			playerStart[0] = LeftStars[0]; // Player 1 start / end stars.
+			playerEnd[0] = RightStars[0];
+			playerStart[1] = TopStars[0]; // Player 2 start / end stars.
+			playerEnd[1] = BottomStars[0];
 			
 			var stars:int;
-			
-			trace("Building LeftStar lines...");
 			
 			for (stars = 0; stars < LeftStars.length - 1; stars++) {
 				connectStarter(LeftStars[stars], LeftStars[stars + 1], 0);
 			}
 			
-			trace("Building RightStar lines...");
-			
 			for (stars = 0; stars < RightStars.length - 1; stars++) {
 				connectStarter(RightStars[stars], RightStars[stars + 1], 0);
 			}
-			
-			trace("Building TopStar lines...");
 			
 			for (stars = 0; stars < TopStars.length - 1; stars++) {
 				connectStarter(TopStars[stars], TopStars[stars + 1], 1);
 			}
 			
-			trace("Building BottomStar lines...");
-			
 			for (stars = 0; stars < BottomStars.length - 1; stars++) {
 				connectStarter(BottomStars[stars], BottomStars[stars + 1], 1);
 			}
 			
-			trace("Connection check...");
-			
-			if (LeftStars[0].IsConnectedTo(0, LeftStars[2])) {
-				trace("Is Connected!");
-			}
-			else {
-				trace("Isn't connected.");
-			}
+			info = new InfoText();
+			add(info);
+			info.UpdatePlayer(activePlayer);
 		}
 		
 		public function connectStarter (a:Star, b:Star, player:int):void
@@ -131,8 +127,19 @@ package
 						lastLine = activeLine;
 						
 						add(activeLine);
+						
+						if (playerStart[activePlayer].IsConnectedTo(activePlayer, playerEnd[activePlayer]))
+						{
+							winningPlayer = activePlayer;
+							//trace("Player " + activePlayer + " wins!");
+							info.Winner(activePlayer);
+						}
+						else
+						{
+							info.UpdatePlayer(int(!activePlayer));
+						}
 					
-						activePlayer = int(!activePlayer);
+						activePlayer = int(!activePlayer);						
 					}
 				}
 				

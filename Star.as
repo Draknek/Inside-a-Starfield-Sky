@@ -3,10 +3,6 @@ package
 	import net.flashpunk.*;
 	import net.flashpunk.graphics.Image;
 	
-	/**
-	 * ...
-	 * @author 
-	 */
 	public class Star extends Entity 
 	{
 		[Embed(source = 'star.png')]
@@ -80,34 +76,10 @@ package
 				return true;
 			}
 			
-			/*for (var l:int; l < lines.length; l++) {
-				if (lines[l].star1 == this) {
-					if (CheckedStars.indexOf(lines[l].star2) == -1)
-					{
-						if (lines[l].star2.NestedIsConnectedTo(CheckedStars, player, destination))
-						{
-							return true;
-						}
-						CheckedStars.push(lines[l].star2);
-					}
-				}
-				else
-				{
-					if (CheckedStars.indexOf(lines[l].star1) == -1)
-					{
-						if (lines[l].star1.NestedIsConnectedTo(CheckedStars, player, destination))
-						{
-							return true;
-						}
-						CheckedStars.push(lines[l].star1);
-					}
-				}
-			} */
-			
 			return NestedIsConnectedTo(CheckedStars, player, destination);
 		}
 		
-		public function NestedIsConnectedTo(checkedstars:Array, player:int, destination:Star):Boolean
+		private function NestedIsConnectedTo(checkedstars:Array, player:int, destination:Star):Boolean
 		{
 			if (CheckStarConnections(player, this, destination)) {
 				return true;
