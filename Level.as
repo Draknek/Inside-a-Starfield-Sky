@@ -34,7 +34,6 @@ package
 			{
 				for (var starsy:int = 0; starsy < 9; starsy++)
 				{
-					
 					if ((starsx == 0 || starsx == 8) && (starsy == 0 || starsy == 8)) continue;
 					
 					var newstar:Star = new Star(50 + (FP.rand(30) - 15) + (starsx * 45), 50 + (FP.rand(30) - 15) + (starsy * 45));
@@ -116,7 +115,7 @@ package
 				if (nearStar) {
 					activeLine.star2 = nearStar;
 				
-					if (validLine()) {
+					if (validLine() && winningPlayer == -1) {
 						if (nearStar.getPlayer() != activePlayer) {
 							nearStar.removeAllLines();
 						}
@@ -128,11 +127,18 @@ package
 						
 						add(activeLine);
 						
-						if (playerStart[activePlayer].IsConnectedTo(activePlayer, playerEnd[activePlayer]))
+						var connectedstars:Array;
+						
+						if ((connectedstars = playerStart[activePlayer].IsConnectedTo(activePlayer, playerEnd[activePlayer])) != null)
 						{
 							winningPlayer = activePlayer;
 							//trace("Player " + activePlayer + " wins!");
 							info.Winner(activePlayer);
+							
+							for (var star:int = 0; star < connectedstars.length - 1; ++star)
+							{
+								connectStarter(connectedstars[star], connectedstars[star + 1], winningPlayer);
+							}
 						}
 						else
 						{

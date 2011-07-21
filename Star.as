@@ -62,26 +62,34 @@ package
 			}
 		}
 		
-		public function IsConnectedTo(player:int, destination:Star):Boolean
+		public function IsConnectedTo(player:int, destination:Star):Array
 		{
+			var usedStars:Array = [];
+			var checkedStars:Array = [ this ];
+			
 			if (destination == this) {
-				return true;
+				return usedStars;
 			}
-			
-			var CheckedStars:Array = [];
-			
-			CheckedStars.push(this);
 			
 			if (CheckStarConnections(player, this, destination)) {
-				return true;
+				usedStars.push(this);
+				return usedStars;
 			}
 			
-			return NestedIsConnectedTo(CheckedStars, player, destination);
+			if (NestedIsConnectedTo(checkedStars, usedStars, player, destination))
+			{
+				usedStars.push(this);
+				return usedStars;
+			}
+			
+			return null;
 		}
 		
-		private function NestedIsConnectedTo(checkedstars:Array, player:int, destination:Star):Boolean
+		private function NestedIsConnectedTo(checkedstars:Array, usedstars:Array, player:int, destination:Star):Boolean
 		{
 			if (CheckStarConnections(player, this, destination)) {
+				checkedstars.push(destination);
+				//usedstars.push(this);
 				return true;
 			}
 			
@@ -90,8 +98,10 @@ package
 					if (checkedstars.indexOf(lines[l].star2) == -1)
 					{
 						checkedstars.push(lines[l].star2);
-						if (lines[l].star2.NestedIsConnectedTo(checkedstars, player, destination))
+						if (lines[l].star2.NestedIsConnectedTo(checkedstars, usedstars, player, destination))
 						{
+							usedstars.push(this);
+							//usedstars.push(destination);
 							return true;
 						}
 					}
@@ -101,13 +111,17 @@ package
 					if (checkedstars.indexOf(lines[l].star1) == -1)
 					{
 						checkedstars.push(lines[l].star1);
-						if (lines[l].star1.NestedIsConnectedTo(checkedstars, player, destination))
+						if (lines[l].star1.NestedIsConnectedTo(checkedstars, usedstars, player, destination))
 						{
+							usedstars.push(this);
+							//usedstars.push(destination);
 							return true;
 						}
 					}
 				}
 			}
+			
+			usedstars.pop();
 			
 			return false;
 		}
