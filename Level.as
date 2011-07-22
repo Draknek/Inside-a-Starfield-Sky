@@ -107,6 +107,8 @@ package
 		
 		public override function update (): void
 		{
+			if (winningPlayer != -1) return;
+			
 			var nearStar:Star = getNearStar();
 			
 			if (nearStar && Input.mousePressed) {
@@ -115,7 +117,7 @@ package
 				if (nearStar) {
 					activeLine.star2 = nearStar;
 				
-					if (validLine() && winningPlayer == -1) {
+					if (validLine()) {
 						if (nearStar.getPlayer() != activePlayer) {
 							nearStar.removeAllLines();
 						}
@@ -213,6 +215,8 @@ package
 		public override function render (): void
 		{
 			super.render();
+			
+			if (winningPlayer != -1) return;
 			
 			var nearStar:Star = getNearStar();
 			
