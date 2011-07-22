@@ -1,0 +1,4 @@
+Remove all stars that lie roughly on a straight line between two other stars that can be joined
+
+Render possible connections?
+Make powerful stars bigger?
