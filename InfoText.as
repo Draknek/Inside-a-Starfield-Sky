@@ -9,8 +9,8 @@ package
 		
 		public function InfoText()
 		{
-			graphic = info = new Text("", 0, 0);
-			info.size = 20;
+			graphic = info = new Text("", 2, 0);
+			info.size = 24;
 		}
 		
 		
